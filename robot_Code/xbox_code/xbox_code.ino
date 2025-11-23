@@ -125,7 +125,7 @@
       int axisRY = myGamepad->axisRY();
       if (axisY < -60) {
         //Forward Left
-        int left_speed = map(axisY, leftAxisYLow, -60, 64, 30);
+        int left_speed = map(axisY, leftAxisYLow, -60, 128, 30);
         Serial.println(left_speed);
         roboclaw2.BackwardM1(controller2,left_speed);
         roboclaw2.ForwardM2(controller2,left_speed);
@@ -133,7 +133,7 @@
       } 
       else if (axisY > 60) {
         //Reverse Left
-        int left_speed = map(axisY, 60, leftAxisYHigh, 30, 64);
+        int left_speed = map(axisY, 60, leftAxisYHigh, 30, 128);
         Serial.println(left_speed);
         roboclaw2.ForwardM1(controller2,left_speed);
         roboclaw2.BackwardM2(controller2,left_speed);
@@ -145,13 +145,13 @@
       } 
       if (axisRY > 60) {
         //Reverse Right
-        int right_speed = map(axisRY, 60, rightAxisYHigh, 30, 64);
+        int right_speed = map(axisRY, 60, rightAxisYHigh, 30, 128);
         roboclaw1.ForwardM1(controller1,right_speed);
         roboclaw1.ForwardM2(controller1,right_speed);
         Serial.println("DOWN Right");
       } 
       else if (axisRY < -60) {
-        int right_speed = map(axisRY, rightAxisYLow, -60, 64, 30);
+        int right_speed = map(axisRY, rightAxisYLow, -60, 128, 30);
         roboclaw1.BackwardM1(controller1,right_speed);
         roboclaw1.BackwardM2(controller1,right_speed);
         Serial.println("UP Right");

@@ -62,29 +62,35 @@ void loop() {
       buffer += c;
       parse_input(buffer);
     
-      if(ForwardR){
-        roboclaw1.BackwardM1(controller1,right_speed);
-        roboclaw1.BackwardM2(controller1,right_speed);
-      }else {
-        roboclaw1.ForwardM1(controller1,right_speed);
-        roboclaw1.ForwardM2(controller1,right_speed);
-      }
-      if(ForwardL){
-        roboclaw2.BackwardM1(controller2,left_speed);
-        roboclaw2.ForwardM2(controller2,left_speed);
-      }else {
-        roboclaw2.ForwardM1(controller2,left_speed);
-        roboclaw2.BackwardM2(controller2,left_speed);
-      }
-      //Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
-      //                " Right: " + String(right_speed) + " " + String(ForwardR));
+      
+      // Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
+      //               " Right: " + String(right_speed) + " " + String(ForwardR));
       // small delay for stability
       buffer = "";            // reset for next msg
     }
     else {
       buffer += c;
     }
+    
   }
+  if(ForwardR == true){
+        roboclaw1.BackwardM1(controller1,right_speed);
+        roboclaw1.BackwardM2(controller1,right_speed);
+        //Serial.println("Driving forward Right");
+      }else {
+        roboclaw1.ForwardM1(controller1,right_speed);
+        roboclaw1.ForwardM2(controller1,right_speed);
+        //Serial.println("Driving backwards Right");
+      }
+      if(ForwardL == true){
+        roboclaw2.BackwardM1(controller2,left_speed);
+        roboclaw2.ForwardM2(controller2,left_speed);
+        //Serial.println("Driving forward left");
+      }else {
+        roboclaw2.ForwardM1(controller2,left_speed);
+        roboclaw2.BackwardM2(controller2,left_speed);
+        //Serial.println("Driving backwards left");
+      }
   
   
   delay(1);
