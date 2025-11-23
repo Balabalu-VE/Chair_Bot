@@ -7,7 +7,7 @@ bool BT_connected = false;
 
 int left_speed = 0;
 int right_speed = 0;
-const double MAX_SPEED = 10.0;
+const int MAX_SPEED = 10;
 
 bool ForwardR = true;
 bool ForwardL = true;
@@ -52,19 +52,22 @@ void parse_input(const String& input) {
 }
 
 void loop() {
-  roboclaw1.ForwardM1(controller1, 64);
-    //Serial.println("forward motor 1");
-
-    roboclaw1.ForwardM2(controller1, 64);
-    //Serial.println("forward motor 2");
-
-    roboclaw2.ForwardM1(controller2, 64);
-    //Serial.println("forward motor 3");
-
-    roboclaw2.ForwardM2(controller2, 64);
-    //Serial.println("forward motor 4");
-
-
+  if(ForwardL && ForwardR){
+    roboclaw2.ForwardM2(controller2,MAX_SPEED);
+    roboclaw1.ForwardM1(controller1,MAX_SPEED);
+    }
+  else if(ForwardR||ForwardL){
+    roboclaw1.ForwardM1(controller1,-MAX_SPEED);
+    roboclaw2.ForwardM2(controller1,MAX_SPEED);
+    }
+  else if(ForwardL||ForwardR){
+    roboclaw1.ForwardM1(controller1,MAX_SPEED);
+    roboclaw2.ForwardM2(controller1,-MAX_SPEED);
+  }
+  else{
+    roboclaw1.ForwardM1(controller1,0);
+    roboclaw2.ForwardM2(controller1,0);
+  }
   // small delay for stability
   delay(1);
 }
