@@ -26,13 +26,15 @@ RoboClaw roboclaw2(&Serial2, 10000);
 
 void setup() {
   Serial.begin(115200);          // use FAST serial!
-  SerialBT.begin("ESP32test-pip");
+  SerialBT.begin("ESP32-real");
   Serial.println("Bluetooth ready");
-      Serial.begin(115200);   //Initiate usb serial for debug
-    Serial1.begin(38400, SERIAL_8N1, RX0, TX0);
-    roboclaw1.begin(38400); //set roboclaw baud rate
-    Serial2.begin(38400, SERIAL_8N1, RX2, TX2);
-    roboclaw2.begin(38400);
+  Serial.begin(115200);   //Initiate usb serial for debug
+  Serial1.begin(38400, SERIAL_8N1, RX0, TX0);
+  roboclaw1.begin(38400); //set roboclaw baud rate
+  Serial2.begin(38400, SERIAL_8N1, RX2, TX2);
+  roboclaw2.begin(38400);
+  roboclaw1.ForwardM1(controller1,0.0);
+  roboclaw2.ForwardM2(controller2,0.0);
 }
 
 void parse_input(const String& input) {
@@ -51,23 +53,36 @@ void parse_input(const String& input) {
   }
 }
 
+//M1 as right and M2 as Left
 void loop() {
-  if(ForwardL && ForwardR){
-    roboclaw2.ForwardM2(controller2,MAX_SPEED);
-    roboclaw1.ForwardM1(controller1,MAX_SPEED);
+  while (SerialBT.available()) {
+    BT_connected = true;
+    char c = SerialBT.read();
+
+    if (c == ';') {           // end of message
+      buffer += c;
+      parse_input(buffer);
+    
+      if(ForwardL){
+        roboclaw2.ForwardM2(controller2,left_speed);
+      }else {
+        roboclaw2.BackwardM2(controller2,left_speed);
+      }
+      if(ForwardR){
+        roboclaw2.ForwardM1(controller1,right_speed);
+      }else {
+        roboclaw2.BackwardM1(controller1,right_speed);
+      }
+      //Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
+      //                " Right: " + String(right_speed) + " " + String(ForwardR));
+      // small delay for stability
+      buffer = "";            // reset for next msg
     }
-  else if(ForwardR||ForwardL){
-    roboclaw1.ForwardM1(controller1,-MAX_SPEED);
-    roboclaw2.ForwardM2(controller1,MAX_SPEED);
+    else {
+      buffer += c;
     }
-  else if(ForwardL||ForwardR){
-    roboclaw1.ForwardM1(controller1,MAX_SPEED);
-    roboclaw2.ForwardM2(controller1,-MAX_SPEED);
   }
-  else{
-    roboclaw1.ForwardM1(controller1,0);
-    roboclaw2.ForwardM2(controller1,0);
-  }
-  // small delay for stability
+  
+  
   delay(1);
 }
