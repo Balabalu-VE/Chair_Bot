@@ -7,7 +7,7 @@ bool BT_connected = false;
 
 int left_speed = 0;
 int right_speed = 0;
-const int MAX_SPEED = 10;
+const int MAX_SPEED = 50;
 
 bool ForwardR = true;
 bool ForwardL = true;
@@ -28,13 +28,12 @@ void setup() {
   Serial.begin(115200);          // use FAST serial!
   SerialBT.begin("ESP32-real");
   Serial.println("Bluetooth ready");
-  Serial.begin(115200);   //Initiate usb serial for debug
   Serial1.begin(38400, SERIAL_8N1, RX0, TX0);
   roboclaw1.begin(38400); //set roboclaw baud rate
   Serial2.begin(38400, SERIAL_8N1, RX2, TX2);
   roboclaw2.begin(38400);
-  roboclaw1.ForwardM1(controller1,0.0);
-  roboclaw2.ForwardM2(controller2,0.0);
+  //roboclaw1.ForwardM1(controller1,0.0);
+  //roboclaw2.ForwardM2(controller2,0.0);
 }
 
 void parse_input(const String& input) {
@@ -63,19 +62,19 @@ void loop() {
       buffer += c;
       parse_input(buffer);
     
+      if(ForwardR){
+        roboclaw1.BackwardM1(controller1,right_speed);
+        roboclaw1.BackwardM2(controller1,right_speed);
+      }else {
+        roboclaw1.ForwardM1(controller1,right_speed);
+        roboclaw1.ForwardM2(controller1,right_speed);
+      }
       if(ForwardL){
-        roboclaw2.ForwardM1(controller2,left_speed);
+        roboclaw2.BackwardM1(controller2,left_speed);
         roboclaw2.ForwardM2(controller2,left_speed);
       }else {
-        roboclaw2.BackwardM1(controller2,left_speed);
+        roboclaw2.ForwardM1(controller2,left_speed);
         roboclaw2.BackwardM2(controller2,left_speed);
-      }
-      if(ForwardR){
-        roboclaw2.ForwardM1(controller1,right_speed);
-        roboclaw2.ForwardM2(controller1,right_speed);
-      }else {
-        roboclaw2.BackwardM1(controller1,right_speed);
-        roboclaw2.BackwardM2(controller1,right_speed);
       }
       //Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
       //                " Right: " + String(right_speed) + " " + String(ForwardR));
