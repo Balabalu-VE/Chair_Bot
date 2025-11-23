@@ -1,0 +1,13 @@
+README.md
+setup.py
+examples/PyKinectBodyGame.py
+examples/PyKinectInfraRed.py
+examples/__init__.py
+pykinect2/PyKinectRuntime.py
+pykinect2/PyKinectV2.py
+pykinect2/__init__.py
+pykinect2.egg-info/PKG-INFO
+pykinect2.egg-info/SOURCES.txt
+pykinect2.egg-info/dependency_links.txt
+pykinect2.egg-info/requires.txt
+pykinect2.egg-info/top_level.txt
