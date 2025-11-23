@@ -321,7 +321,7 @@ class BodyGameRuntime(object):
                 motor_right = 0.0
 
             #Now that we get motor values. We send them through COM port
-            print("Motor Left: " + str(motor_left) + ", Motor Right: " +str(motor_right))
+            #print("Motor Left: " + str(motor_left) + ", Motor Right: " +str(motor_right))
             msg = f"L:{motor_left}, R:{motor_right};"
             ser.write(msg.encode())
             time.sleep(.05)
@@ -362,6 +362,6 @@ class BodyGameRuntime(object):
 
 
 __main__ = "Kinect v2 Body Game"
-game = BodyGameRuntime();
-game.run();
+game = BodyGameRuntime()
+game.run()
 
