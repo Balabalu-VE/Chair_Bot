@@ -25,3 +25,7 @@ Control a moving chair using your body.
 
    ser.close()
 
+## Download Roboclaw library to talk to motor controllers through ESP32
+
+https://www.pololu.com/product/3687
+
