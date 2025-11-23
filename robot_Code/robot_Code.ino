@@ -53,7 +53,7 @@ void parse_input(const String& input) {
   }
 }
 
-//M1 as right and M2 as Left
+//Controller1 as right and Controller2 as Left
 void loop() {
   while (SerialBT.available()) {
     BT_connected = true;
