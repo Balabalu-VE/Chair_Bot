@@ -64,14 +64,18 @@ void loop() {
       parse_input(buffer);
     
       if(ForwardL){
+        roboclaw2.ForwardM1(controller2,left_speed);
         roboclaw2.ForwardM2(controller2,left_speed);
       }else {
+        roboclaw2.BackwardM1(controller2,left_speed);
         roboclaw2.BackwardM2(controller2,left_speed);
       }
       if(ForwardR){
         roboclaw2.ForwardM1(controller1,right_speed);
+        roboclaw2.ForwardM2(controller1,right_speed);
       }else {
         roboclaw2.BackwardM1(controller1,right_speed);
+        roboclaw2.BackwardM2(controller1,right_speed);
       }
       //Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
       //                " Right: " + String(right_speed) + " " + String(ForwardR));
