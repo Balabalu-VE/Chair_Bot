@@ -5,7 +5,7 @@
   float right_speed = 0;
   int axisY = 0; //Left 
   int axisRY = 0; //Right
-  const float MAX_SPEED = 127; //Speed is 0-127
+  const float MAX_SPEED = 126; //Speed is 0-127
 
   bool ForwardR = true;
   bool ForwardL = true;
@@ -135,7 +135,7 @@
         //Forward Left
         left_speed = map(axisY, leftAxisYLow, -60, MAX_SPEED, 30);
         left_speed = (left_speed * left_speed) / MAX_SPEED;
-        left_speed = constrain(left_speed, 0, MAX_SPEED-1); //Left speed needs to be minus 1?
+        left_speed = constrain(left_speed, 0, MAX_SPEED); //Left speed needs to be minus 1?
         //Serial.println(left_speed);
         roboclaw2.BackwardM1(controller2,int(left_speed));
         roboclaw2.ForwardM2(controller2,int(left_speed));
@@ -162,7 +162,7 @@
         right_speed = map(axisRY, 60, rightAxisYHigh, 30, MAX_SPEED);
         right_speed = (right_speed * right_speed) / MAX_SPEED;
         right_speed = constrain(right_speed, 0, MAX_SPEED);
-        //Serial.println(right_speed);
+        Serial.println(right_speed);
         roboclaw1.ForwardM1(controller1,int(right_speed));
         roboclaw1.ForwardM2(controller1,int(right_speed));
         //Serial.println("DOWN Right");
@@ -171,7 +171,7 @@
         right_speed = map(axisRY, rightAxisYLow, -60, MAX_SPEED, 30);
         right_speed = (right_speed * right_speed) / MAX_SPEED;
         right_speed = constrain(right_speed, 0, MAX_SPEED);
-        //Serial.println(right_speed);
+        Serial.println(right_speed);
         roboclaw1.BackwardM1(controller1,int(right_speed));
         roboclaw1.BackwardM2(controller1,int(right_speed));
         //Serial.println("UP Right");
