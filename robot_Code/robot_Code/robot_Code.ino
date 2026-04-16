@@ -1,4 +1,5 @@
 #include "BluetoothSerial.h"
+#include <Bluepad32.h>
 
 BluetoothSerial SerialBT;
 
@@ -32,6 +33,7 @@ void setup() {
   roboclaw1.begin(38400); //set roboclaw baud rate
   Serial2.begin(38400, SERIAL_8N1, RX2, TX2);
   roboclaw2.begin(38400);
+  Serial.print("Setup Complete")
   //roboclaw1.ForwardM1(controller1,0.0);
   //roboclaw2.ForwardM2(controller2,0.0);
 }
@@ -63,8 +65,8 @@ void loop() {
       parse_input(buffer);
     
       
-      // Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
-      //               " Right: " + String(right_speed) + " " + String(ForwardR));
+      Serial.println("Left: " + String(left_speed) + " " + String(ForwardL) +
+                    " Right: " + String(right_speed) + " " + String(ForwardR));
       // small delay for stability
       buffer = "";            // reset for next msg
     }
