@@ -182,6 +182,11 @@
         roboclaw1.BackwardM1(controller1,0);
         roboclaw1.BackwardM2(controller1,0);
       }
+    }else{ //Stop when no controller input or disconnected
+      roboclaw2.ForwardM1(controller2,0);
+      roboclaw2.BackwardM2(controller2,0);
+      roboclaw1.BackwardM1(controller1,0);
+      roboclaw1.BackwardM2(controller1,0);
     }
   }
     void setup() {
