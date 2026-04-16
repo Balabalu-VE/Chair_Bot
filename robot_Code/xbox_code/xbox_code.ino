@@ -162,7 +162,7 @@
         right_speed = map(axisRY, 60, rightAxisYHigh, 30, MAX_SPEED);
         right_speed = (right_speed * right_speed) / MAX_SPEED;
         right_speed = constrain(right_speed, 0, MAX_SPEED);
-        Serial.println(right_speed);
+        //Serial.println(right_speed);
         roboclaw1.ForwardM1(controller1,int(right_speed));
         roboclaw1.ForwardM2(controller1,int(right_speed));
         //Serial.println("DOWN Right");
@@ -171,7 +171,7 @@
         right_speed = map(axisRY, rightAxisYLow, -60, MAX_SPEED, 30);
         right_speed = (right_speed * right_speed) / MAX_SPEED;
         right_speed = constrain(right_speed, 0, MAX_SPEED);
-        Serial.println(right_speed);
+        //Serial.println(right_speed);
         roboclaw1.BackwardM1(controller1,int(right_speed));
         roboclaw1.BackwardM2(controller1,int(right_speed));
         //Serial.println("UP Right");
