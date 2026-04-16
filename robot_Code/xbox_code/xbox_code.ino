@@ -27,17 +27,17 @@
 
   //Values for left joystick min, max, and idle values for mapping change based on controller or maybe run setup sequence idk
    int leftAxisXLow = -512;
-  const int leftAxisXHigh = 512;
+  const int leftAxisXHigh = 511;
   const int leftAxisYLow = -512;
-  const int leftAxisYHigh = 512;
+  const int leftAxisYHigh = 511;
   //const int leftAxisXIdle = 0;
   //const int leftAxisYIdle = 0;
 
   //Values for right joystick idle values mapping change based on controller or maybe run setup sequence idk
   const int rightAxisXLow = -512;
-  const int rightAxisXHigh = 512;
+  const int rightAxisXHigh = 511;
   const int rightAxisYLow = -512;
-  const int rightAxisYHigh = 512;
+  const int rightAxisYHigh = 511;
   //const int rightAxisXIdle = 0;
   //const int rightAxisYIdle = 0;
 
@@ -127,10 +127,15 @@
     if (myGamepad && myGamepad->isConnected()) {
       axisY = myGamepad->axisY();
       axisRY = myGamepad->axisRY();
+      // Serial.print("Left joystick: ");
+      // Serial.println(axisY);
+      // Serial.print("Right joystick: ");
+      // Serial.println(axisRY);
       if (axisY < -60) {
         //Forward Left
         left_speed = map(axisY, leftAxisYLow, -60, MAX_SPEED, 30);
-        left_speed = (left_speed*left_speed)*(1.0/MAX_SPEED);
+        left_speed = (left_speed * left_speed) / MAX_SPEED;
+        left_speed = constrain(left_speed, 0, MAX_SPEED-1); //Left speed needs to be minus 1?
         //Serial.println(left_speed);
         roboclaw2.BackwardM1(controller2,int(left_speed));
         roboclaw2.ForwardM2(controller2,int(left_speed));
@@ -140,7 +145,8 @@
         //Reverse Left
         left_speed = map(axisY, 60, leftAxisYHigh, 30, MAX_SPEED);
         //Serial.println(left_speed);
-        left_speed = (left_speed*left_speed)*(1.0/MAX_SPEED);
+        left_speed = (left_speed * left_speed) / MAX_SPEED;
+        left_speed = constrain(left_speed, 0, MAX_SPEED-1); //Left speed needs to be minus 1?
         //Serial.println(left_speed);
         roboclaw2.ForwardM1(controller2,int(left_speed));
         roboclaw2.BackwardM2(controller2,int(left_speed));
@@ -154,7 +160,8 @@
       if (axisRY > 60) {
         //Reverse Right
         right_speed = map(axisRY, 60, rightAxisYHigh, 30, MAX_SPEED);
-        right_speed = (right_speed*right_speed)*(1.0/MAX_SPEED);
+        right_speed = (right_speed * right_speed) / MAX_SPEED;
+        right_speed = constrain(right_speed, 0, MAX_SPEED);
         //Serial.println(right_speed);
         roboclaw1.ForwardM1(controller1,int(right_speed));
         roboclaw1.ForwardM2(controller1,int(right_speed));
@@ -162,7 +169,8 @@
       } 
       else if (axisRY < -60) {
         right_speed = map(axisRY, rightAxisYLow, -60, MAX_SPEED, 30);
-        right_speed = (right_speed*right_speed)*(1.0/MAX_SPEED);
+        right_speed = (right_speed * right_speed) / MAX_SPEED;
+        right_speed = constrain(right_speed, 0, MAX_SPEED);
         //Serial.println(right_speed);
         roboclaw1.BackwardM1(controller1,int(right_speed));
         roboclaw1.BackwardM2(controller1,int(right_speed));
